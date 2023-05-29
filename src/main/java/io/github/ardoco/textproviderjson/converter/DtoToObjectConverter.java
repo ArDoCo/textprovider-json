@@ -42,7 +42,7 @@ public class DtoToObjectConverter {
     private Sentence convertToSentence(SentenceDTO sentenceDTO, Text parentText) {
         List<Word> words = sentenceDTO.getWords().stream().map(wordDto -> convertToWord(wordDto, parentText)).toList();
         String constituencyTree = sentenceDTO.getConstituencyTree();
-        SentenceImpl sentence = new SentenceImpl((int) sentenceDTO.getSentenceNo(), sentenceDTO.getText(), Lists.immutable.ofAll(words));
+        SentenceImpl sentence = new SentenceImpl((int) sentenceDTO.getSentenceNo() - 1, sentenceDTO.getText(), Lists.immutable.ofAll(words));
         Phrase phrases = parseConstituencyTree(constituencyTree, new ArrayList<>(words));
         sentence.setPhrases(Lists.immutable.of(phrases));
         return sentence;
@@ -106,7 +106,7 @@ public class DtoToObjectConverter {
     private Word convertToWord(WordDTO wordDTO, Text parent) {
         List<DependencyImpl> incomingDep = wordDTO.getIncomingDependencies().stream().map(this::convertIncomingDependency).toList();
         List<DependencyImpl> outgoingDep = wordDTO.getOutgoingDependencies().stream().map(this::convertOutgoingDependency).toList();
-        return new WordImpl(parent, (int) wordDTO.getId(), (int) wordDTO.getSentenceNo(), wordDTO.getText(), POSTag.get(wordDTO.getPosTag().toString()), wordDTO
+        return new WordImpl(parent, (int) wordDTO.getId() - 1, (int) wordDTO.getSentenceNo() - 1, wordDTO.getText(), POSTag.get(wordDTO.getPosTag().toString()), wordDTO
                 .getLemma(), incomingDep, outgoingDep);
     }
 
