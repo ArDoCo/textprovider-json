@@ -1,6 +1,7 @@
 package io.github.ardoco.textproviderjson.converter;
 
 import edu.kit.kastel.mcse.ardoco.core.api.data.text.Phrase;
+import edu.kit.kastel.mcse.ardoco.core.api.data.text.Sentence;
 
 import java.util.List;
 
@@ -20,6 +21,11 @@ public final class ConverterUtil {
     public static List<Phrase> getChildPhrases(Phrase parentPhrase) {
         List<Phrase> subphrases = parentPhrase.getSubPhrases().toList();
         return subphrases.stream().filter(x -> isPhraseOnHighestLevel(subphrases, x)).toList();
+    }
+
+    public static List<Phrase> getChildPhrases(Sentence sentence) {
+        List<Phrase> phrases = sentence.getPhrases().toList();
+        return phrases.stream().filter(x -> isPhraseOnHighestLevel(phrases, x)).toList();
     }
 
     private static boolean isPhraseOnHighestLevel(List<Phrase> subphrases, Phrase childPhrase) {
