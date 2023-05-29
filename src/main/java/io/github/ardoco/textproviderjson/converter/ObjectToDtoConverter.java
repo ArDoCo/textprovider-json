@@ -45,8 +45,7 @@ public class ObjectToDtoConverter {
         sentenceDTO.setText(sentence.getText());
         List<WordDTO> words = generateWordDTOs(sentence.getWords());
         sentenceDTO.setWords(words);
-        Phrase rootPhrase = sentence.getPhrases().get(0);
-        String tree = convertToConstituencyTrees(rootPhrase);
+        String tree = convertToConstituencyTrees(sentence);
         sentenceDTO.setConstituencyTree(tree);
         return sentenceDTO;
     }
@@ -66,7 +65,7 @@ public class ObjectToDtoConverter {
             logger.warn("IOException when converting to WordDto.", e);
             return null;
         }
-        wordDTO.setSentenceNo(word.getSentenceNo());
+        wordDTO.setSentenceNo(word.getSentenceNo() + 1);
         List<DependencyImpl> inDep = new ArrayList<>();
         List<DependencyImpl> outDep = new ArrayList<>();
         for (DependencyTag depType : DependencyTag.values()) {
@@ -82,8 +81,13 @@ public class ObjectToDtoConverter {
         return wordDTO;
     }
 
-    private String convertToConstituencyTrees(Phrase rootPhrase) {
-        return convertToSubtree(rootPhrase);
+    private String convertToConstituencyTrees(Sentence sentence) {
+        List<Phrase> rootPhrases = ConverterUtil.getChildPhrases(sentence);
+        StringBuilder constituencyTree = new StringBuilder();
+        for (Phrase rootPhrase: rootPhrases) {
+            constituencyTree.append(convertToSubtree(rootPhrase));
+        }
+        return constituencyTree.toString();
     }
 
     private String convertToSubtree(Phrase phrase) {
