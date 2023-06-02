@@ -84,7 +84,7 @@ public class ObjectToDtoConverter {
     private String convertToConstituencyTrees(Sentence sentence) {
         List<Phrase> rootPhrases = ConverterUtil.getChildPhrases(sentence);
         StringBuilder constituencyTree = new StringBuilder();
-        for (Phrase rootPhrase: rootPhrases) {
+        for (Phrase rootPhrase : rootPhrases) {
             constituencyTree.append(convertToSubtree(rootPhrase));
         }
         return constituencyTree.toString();

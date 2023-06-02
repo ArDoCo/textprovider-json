@@ -1,9 +1,10 @@
+/* Licensed under MIT 2023. */
 package io.github.ardoco.textproviderjson.converter;
+
+import java.util.List;
 
 import edu.kit.kastel.mcse.ardoco.core.api.data.text.Phrase;
 import edu.kit.kastel.mcse.ardoco.core.api.data.text.Sentence;
-
-import java.util.List;
 
 /**
  * This utility class provides methods for the converter
@@ -15,8 +16,9 @@ public final class ConverterUtil {
 
     /**
      * gets the direct children of the given phrase
-     * @param parentPhrase  the phrase
-     * @return              the direct children of this phrase
+     * 
+     * @param parentPhrase the phrase
+     * @return the direct children of this phrase
      */
     public static List<Phrase> getChildPhrases(Phrase parentPhrase) {
         List<Phrase> subphrases = parentPhrase.getSubPhrases().toList();
@@ -25,8 +27,9 @@ public final class ConverterUtil {
 
     /**
      * gets the phrases on the highest level of the given sentence
-     * @param sentence  the sentence
-     * @return          the child phrases of the sentence
+     * 
+     * @param sentence the sentence
+     * @return the child phrases of the sentence
      */
     public static List<Phrase> getChildPhrases(Sentence sentence) {
         List<Phrase> phrases = sentence.getPhrases().toList();
@@ -34,7 +37,7 @@ public final class ConverterUtil {
     }
 
     private static boolean isPhraseOnHighestLevel(List<Phrase> subphrases, Phrase childPhrase) {
-        for (Phrase subphrase: subphrases) {
+        for (Phrase subphrase : subphrases) {
             if (childPhrase.isSubPhraseOf(subphrase)) {
                 return false;
             }

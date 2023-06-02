@@ -66,7 +66,7 @@ public class PhraseImpl implements Phrase {
     @Override
     public ImmutableList<Phrase> getSubPhrases() {
         List<Phrase> subPhrases = new ArrayList<>(childPhrases);
-        for (Phrase childPhrase: childPhrases) {
+        for (Phrase childPhrase : childPhrases) {
             subPhrases.addAll(childPhrase.getSubPhrases().toList());
         }
         return Lists.immutable.ofAll(subPhrases);
@@ -125,7 +125,8 @@ public class PhraseImpl implements Phrase {
             return true;
         if (!(o instanceof PhraseImpl phrase))
             return false;
-        return Objects.equals(words, phrase.words) && Objects.equals(text, phrase.text) && type == phrase.type && Objects.equals(childPhrases, phrase.childPhrases);
+        return Objects.equals(words, phrase.words) && Objects.equals(text, phrase.text) && type == phrase.type && Objects.equals(childPhrases,
+                phrase.childPhrases);
     }
 
     @Override

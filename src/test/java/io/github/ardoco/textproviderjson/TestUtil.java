@@ -88,9 +88,8 @@ public final class TestUtil {
     public static Text generateDefaultText() {
         TextImpl text = new TextImpl();
         List<WordImpl> words = new ArrayList<>(List.of(new WordImpl(text, 0, 0, "This", POSTag.DETERMINER, "this", new ArrayList<>(), new ArrayList<>()),
-                new WordImpl(text, 1, 0, "is", POSTag.VERB_SINGULAR_PRESENT_THIRD_PERSON, "be", new ArrayList<>(), new ArrayList<>()),
-                new WordImpl(text, 2, 0, "me", POSTag.PRONOUN_PERSONAL, "I", new ArrayList<>(), new ArrayList<>()),
-                new WordImpl(text, 3, 0, ".", POSTag.CLOSER, ".",
+                new WordImpl(text, 1, 0, "is", POSTag.VERB_SINGULAR_PRESENT_THIRD_PERSON, "be", new ArrayList<>(), new ArrayList<>()), new WordImpl(text, 2, 0,
+                        "me", POSTag.PRONOUN_PERSONAL, "I", new ArrayList<>(), new ArrayList<>()), new WordImpl(text, 3, 0, ".", POSTag.CLOSER, ".",
                                 new ArrayList<>(), new ArrayList<>())));
 
         SentenceImpl sentence1 = new SentenceImpl(0, "This is me.", Lists.immutable.ofAll(words));
