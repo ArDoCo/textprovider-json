@@ -102,8 +102,8 @@ public final class TestUtil {
         List<Phrase> subphrases = new ArrayList<>(List.of(subphrase1, subphrase2));
         Phrase phrase1 = new PhraseImpl(Lists.immutable.of(words.get(3)), PhraseType.S, subphrases);
         List<Phrase> phrases = new ArrayList<>(List.of(phrase1));
-
-        sentence1.setPhrases(Lists.immutable.ofAll(phrases));
+        Phrase rootPhrase = new PhraseImpl(Lists.immutable.empty(), PhraseType.ROOT, phrases);
+        sentence1.setPhrases(Lists.immutable.of(rootPhrase));
 
         List<Sentence> sentences = new ArrayList<>();
         sentences.add(sentence1);

@@ -23,6 +23,11 @@ public final class ConverterUtil {
         return subphrases.stream().filter(x -> isPhraseOnHighestLevel(subphrases, x)).toList();
     }
 
+    /**
+     * gets the phrases on the highest level of the given sentence
+     * @param sentence  the sentence
+     * @return          the child phrases of the sentence
+     */
     public static List<Phrase> getChildPhrases(Sentence sentence) {
         List<Phrase> phrases = sentence.getPhrases().toList();
         return phrases.stream().filter(x -> isPhraseOnHighestLevel(phrases, x)).toList();
