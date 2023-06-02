@@ -48,11 +48,11 @@ public class SentenceImpl implements Sentence {
 
     @Override
     public ImmutableList<Phrase> getPhrases() {
-        List<Phrase> phrases = new ArrayList<>(this.phrases.toList());
+        List<Phrase> allPhrases = new ArrayList<>(this.phrases.toList());
         for (Phrase phrase: this.phrases.toList()) {
-            phrases.addAll(phrase.getSubPhrases().toList());
+            allPhrases.addAll(phrase.getSubPhrases().toList());
         }
-        return Lists.immutable.ofAll(phrases);
+        return Lists.immutable.ofAll(allPhrases);
     }
 
     @Override

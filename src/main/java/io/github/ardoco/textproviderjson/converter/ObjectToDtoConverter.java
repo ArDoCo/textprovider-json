@@ -56,7 +56,7 @@ public class ObjectToDtoConverter {
 
     private WordDTO convertToWordDTO(Word word) {
         WordDTO wordDTO = new WordDTO();
-        wordDTO.setId(word.getPosition() + 1);
+        wordDTO.setId(word.getPosition() + (long) 1);
         wordDTO.setText(word.getText());
         wordDTO.setLemma(word.getLemma());
         try {
@@ -65,7 +65,7 @@ public class ObjectToDtoConverter {
             logger.warn("IOException when converting to WordDto.", e);
             return null;
         }
-        wordDTO.setSentenceNo(word.getSentenceNo() + 1);
+        wordDTO.setSentenceNo(word.getSentenceNo() + (long) 1);
         List<DependencyImpl> inDep = new ArrayList<>();
         List<DependencyImpl> outDep = new ArrayList<>();
         for (DependencyTag depType : DependencyTag.values()) {
