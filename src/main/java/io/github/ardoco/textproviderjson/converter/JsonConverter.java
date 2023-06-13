@@ -19,7 +19,7 @@ import io.github.ardoco.textproviderjson.dto.TextDTO;
  **/
 public final class JsonConverter {
 
-    private static final String SCHEMA_PATH = "schemas/text.json";
+    private static final String SCHEMA_PATH = "src/main/java/io/github/ardoco/textproviderjson/schemas/text.json";
 
     private JsonConverter() {
 
