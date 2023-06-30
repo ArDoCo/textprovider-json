@@ -19,7 +19,7 @@ import io.github.ardoco.textproviderjson.dto.TextDTO;
  **/
 public final class JsonConverter {
 
-    private static final String SCHEMA_PATH = "src/main/resources/schemas/text.json";
+    private static final String SCHEMA_PATH = "schemas/text.json";
 
     private JsonConverter() {
 
@@ -35,7 +35,7 @@ public final class JsonConverter {
         ObjectMapper mapper = new ObjectMapper();
         JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4);
 
-        InputStream inputSchema = new FileInputStream(SCHEMA_PATH);
+        InputStream inputSchema = JsonConverter.class.getClassLoader().getResourceAsStream(SCHEMA_PATH);
         JsonSchema schema = schemaFactory.getSchema(inputSchema);
 
         Set<ValidationMessage> message = schema.validate(mapper.readTree(json));
