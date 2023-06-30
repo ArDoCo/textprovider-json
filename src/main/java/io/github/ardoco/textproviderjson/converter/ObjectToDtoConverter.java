@@ -145,7 +145,7 @@ public class ObjectToDtoConverter {
     private OutgoingDependencyDTO convertToDepOutDTO(DependencyImpl dependency) {
         OutgoingDependencyDTO dependencyDTO = new OutgoingDependencyDTO();
         dependencyDTO.setDependencyTag(dependency.getDependencyTag());
-        dependencyDTO.setTargetWordId(dependency.getWordId() + (long) 1);
+        dependencyDTO.setTargetWordId(dependency.getWordId() + 1L);
         return dependencyDTO;
     }
 }
