@@ -107,6 +107,6 @@ public class DtoToObjectConverter {
     }
 
     private DependencyImpl convertOutgoingDependency(OutgoingDependencyDTO dependencyDTO) {
-        return new DependencyImpl(dependencyDTO.getDependencyTag(), dependencyDTO.getTargetWordId() - (long) 1);
+        return new DependencyImpl(dependencyDTO.getDependencyTag(), dependencyDTO.getTargetWordId() - 1L);
     }
 }
