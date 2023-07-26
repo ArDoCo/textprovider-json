@@ -3,6 +3,7 @@ package io.github.ardoco.textproviderjson.converter;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,11 +13,15 @@ import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
 
 import io.github.ardoco.textproviderjson.dto.TextDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * utility class to convert a text DTO into json and back
  **/
 public final class JsonConverter {
+
+    private static final Logger logger = LoggerFactory.getLogger(JsonConverter.class);
 
     private static final String SCHEMA_PATH = "schemas/text.json";
 
@@ -38,6 +43,12 @@ public final class JsonConverter {
         JsonSchema schema = schemaFactory.getSchema(inputSchema);
 
         Set<ValidationMessage> message = schema.validate(mapper.readTree(json));
+        if (!message.isEmpty()) {
+            // get only the first fifteen messages
+            List<String> loggerMessages = message.stream().map(ValidationMessage::getMessage).toList();
+            String loggerMessage = String.join("\n", loggerMessages.subList(0, 15));
+            logger.info("The following inconsistencies between the json and the json schema were found: {}", loggerMessage);
+        }
         return message.isEmpty();
     }
 
@@ -52,6 +63,7 @@ public final class JsonConverter {
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(json, TextDTO.class);
         }
+        logger.warn("The json string could not be validated.");
         return null;
     }
 
@@ -65,6 +77,7 @@ public final class JsonConverter {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(obj);
         if (!validateJson(jsonString)) {
+            logger.warn("The text DTO could not be converted into a json string.");
             return null;
         }
         return jsonString;
