@@ -4,12 +4,14 @@ package io.github.ardoco.textproviderjson.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.ardoco.textproviderjson.error.NotConvertableException;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
 import edu.kit.kastel.mcse.ardoco.core.api.text.*;
 import io.github.ardoco.textproviderjson.dto.*;
 import io.github.ardoco.textproviderjson.textobject.*;
+import org.eclipse.collections.api.list.MutableList;
 
 /***
  * this class converts a DTO text into an ArDoCo text object
@@ -26,19 +28,26 @@ public class DtoToObjectConverter {
      * @param textDTO the text DTO
      * @return the ArDoCo text
      */
-    public Text convertText(TextDTO textDTO) {
+    public Text convertText(TextDTO textDTO) throws NotConvertableException {
+        if (textDTO == null) {
+            throw new NotConvertableException("Text DTO is null");
+        }
         TextImpl text = new TextImpl();
         ImmutableList<Sentence> sentences = generateSentences(textDTO, text);
         text.setSentences(sentences);
         return text;
     }
 
-    private ImmutableList<Sentence> generateSentences(TextDTO textDTO, Text parentText) {
+    private ImmutableList<Sentence> generateSentences(TextDTO textDTO, Text parentText) throws NotConvertableException {
         List<SentenceDTO> sentenceDTOs = textDTO.getSentences();
-        return Lists.immutable.fromStream(sentenceDTOs.stream().map(sentenceDto -> convertToSentence(sentenceDto, parentText)));
+        MutableList<Sentence> sentences = Lists.mutable.empty();
+        for (SentenceDTO sentenceDTO : sentenceDTOs) {
+            sentences.add(convertToSentence(sentenceDTO, parentText));
+        }
+        return sentences.toImmutable();
     }
 
-    private Sentence convertToSentence(SentenceDTO sentenceDTO, Text parentText) {
+    private Sentence convertToSentence(SentenceDTO sentenceDTO, Text parentText) throws NotConvertableException {
         List<Word> words = sentenceDTO.getWords().stream().map(wordDto -> convertToWord(wordDto, parentText)).toList();
         String constituencyTree = sentenceDTO.getConstituencyTree();
         SentenceImpl sentence = new SentenceImpl((int) sentenceDTO.getSentenceNo() - 1, sentenceDTO.getText(), Lists.immutable.ofAll(words));
@@ -47,8 +56,11 @@ public class DtoToObjectConverter {
         return sentence;
     }
 
-    public Phrase parseConstituencyTree(String constituencyTree, List<Word> wordsOfSentence) {
+    public Phrase parseConstituencyTree(String constituencyTree, List<Word> wordsOfSentence) throws NotConvertableException {
         // remove outer brackets
+        if (!isValidConstituencyTree(constituencyTree)) {
+            throw new NotConvertableException("Constituency tree is not valid");
+        }
         String tree = constituencyTree.substring(1, constituencyTree.length() - 1);
         PhraseType phraseType = PhraseType.get(tree.split(CONSTITUENCY_TREE_SEPARATOR, 2)[0]);
         // remove phrase type
@@ -60,12 +72,23 @@ public class DtoToObjectConverter {
         List<Word> words = new ArrayList<>();
         for (String subtree : subTrees) {
             if (isWord(subtree)) {
+                if (wordsOfSentence.isEmpty()) {
+                    throw new NotConvertableException("Constituency tree does not match words of sentence");
+                }
                 words.add(wordsOfSentence.remove(0));
             } else {
                 subPhrases.add(parseConstituencyTree(subtree, wordsOfSentence));
             }
         }
         return new PhraseImpl(Lists.immutable.ofAll(words), phraseType, subPhrases);
+    }
+
+    private boolean isValidConstituencyTree(String constituencyTree) {
+        return constituencyTree.length() >= 2
+                && constituencyTree.charAt(0) == CONSTITUENCY_TREE_OPEN_BRACKET
+                && constituencyTree.charAt(constituencyTree.length() - 1) == CONSTITUENCY_TREE_CLOSE_BRACKET
+                && constituencyTree.chars().filter(ch -> ch == CONSTITUENCY_TREE_OPEN_BRACKET).count() == constituencyTree.chars().filter(ch -> ch == CONSTITUENCY_TREE_CLOSE_BRACKET).count()
+                && constituencyTree.split(CONSTITUENCY_TREE_SEPARATOR, 2).length > 1;
     }
 
     private List<String> getSubtrees(String treeWithoutType) {
