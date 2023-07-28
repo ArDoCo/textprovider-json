@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.ardoco.textproviderjson.error.InvalidJsonException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +18,10 @@ import io.github.ardoco.textproviderjson.dto.*;
 class FromJsonTest {
 
     @Test
-    void testFromJson() throws IOException {
-        TextDTO generatedText = JsonConverter.fromJsonString(Files.readString(Path.of("./src/test/resources/valid-example-text.json")));
+    void testFromJson() throws IOException, InvalidJsonException {
+        String validJsonText = Files.readString(Path.of("./src/test/resources/valid-example-text.json"));
+        Assertions.assertDoesNotThrow(() -> JsonConverter.fromJsonString(validJsonText));
+        TextDTO generatedText = JsonConverter.fromJsonString(validJsonText);
 
         WordDTO expectedWord = new WordDTO();
         expectedWord.setId(1);

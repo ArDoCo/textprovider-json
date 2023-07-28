@@ -13,6 +13,7 @@ import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
 
 import io.github.ardoco.textproviderjson.dto.TextDTO;
+import io.github.ardoco.textproviderjson.error.InvalidJsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,13 +59,12 @@ public final class JsonConverter {
      * @param json the json string
      * @return the corresponding text DTO
      */
-    public static TextDTO fromJsonString(String json) throws IOException {
-        if (validateJson(json)) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(json, TextDTO.class);
+    public static TextDTO fromJsonString(String json) throws IOException, InvalidJsonException {
+        if (!validateJson(json)) {
+            throw new InvalidJsonException("The json string s no valid text DTO.");
         }
-        logger.warn("The json string could not be validated.");
-        return null;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(json, TextDTO.class);
     }
 
     /**
@@ -73,12 +73,11 @@ public final class JsonConverter {
      * @param obj the text DTO
      * @return the JSON string or null
      */
-    public static String toJsonString(TextDTO obj) throws IOException {
+    public static String toJsonString(TextDTO obj) throws IOException, InvalidJsonException {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(obj);
         if (!validateJson(jsonString)) {
-            logger.warn("The text DTO could not be converted into a json string.");
-            return null;
+            throw new InvalidJsonException("The text DTO could not be converted into a json string. No valid text Dto");
         }
         return jsonString;
     }

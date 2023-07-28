@@ -3,6 +3,7 @@ package io.github.ardoco.textproviderjson.converter;
 
 import edu.kit.kastel.mcse.ardoco.core.api.text.*;
 import io.github.ardoco.textproviderjson.dto.*;
+import io.github.ardoco.textproviderjson.error.NotConvertableException;
 import io.github.ardoco.textproviderjson.textobject.DependencyImpl;
 import org.eclipse.collections.api.list.ImmutableList;
 

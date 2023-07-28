@@ -1,4 +1,4 @@
-package io.github.ardoco.textproviderjson.converter;
+package io.github.ardoco.textproviderjson.error;
 
 public class NotConvertableException extends Exception{
 

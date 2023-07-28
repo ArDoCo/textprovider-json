@@ -3,7 +3,7 @@ package io.github.ardoco.textproviderjson;
 
 import java.io.IOException;
 
-import io.github.ardoco.textproviderjson.converter.NotConvertableException;
+import io.github.ardoco.textproviderjson.error.NotConvertableException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

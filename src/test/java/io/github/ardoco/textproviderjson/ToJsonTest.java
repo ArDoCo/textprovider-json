@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.ardoco.textproviderjson.error.InvalidJsonException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ import io.github.ardoco.textproviderjson.dto.*;
 class ToJsonTest {
 
     @Test
-    void testToJson() throws IOException {
+    void testToJson() throws IOException, InvalidJsonException {
         WordDTO word1 = new WordDTO();
         word1.setId(1);
         word1.setSentenceNo(1);
@@ -52,7 +53,9 @@ class ToJsonTest {
         TextDTO text = new TextDTO();
         text.setSentences(sentences);
 
+        Assertions.assertDoesNotThrow(() -> JsonConverter.toJsonString(text));
         String generatedJson = JsonConverter.toJsonString(text);
+        Assertions.assertDoesNotThrow(() -> JsonConverter.fromJsonString(generatedJson));
         Assertions.assertEquals(text, JsonConverter.fromJsonString(generatedJson));
     }
 }
