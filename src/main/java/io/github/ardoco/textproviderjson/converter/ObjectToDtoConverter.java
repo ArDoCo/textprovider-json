@@ -1,23 +1,19 @@
 /* Licensed under MIT 2023. */
 package io.github.ardoco.textproviderjson.converter;
 
+import edu.kit.kastel.mcse.ardoco.core.api.text.*;
+import io.github.ardoco.textproviderjson.dto.*;
+import io.github.ardoco.textproviderjson.textobject.DependencyImpl;
+import org.eclipse.collections.api.list.ImmutableList;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.eclipse.collections.api.list.ImmutableList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import edu.kit.kastel.mcse.ardoco.core.api.text.*;
-import io.github.ardoco.textproviderjson.dto.*;
-import io.github.ardoco.textproviderjson.textobject.DependencyImpl;
-
 public class ObjectToDtoConverter {
 
-    private static Logger logger = LoggerFactory.getLogger(ObjectToDtoConverter.class);
     private static final String TREE_SEPARATOR = " ";
     private static final char TREE_OPEN_BRACKET = '(';
     private static final char TREE_CLOSE_BRACKET = ')';
@@ -28,18 +24,22 @@ public class ObjectToDtoConverter {
      * @param text the ArDoCo text
      * @return the text DTO
      */
-    public TextDTO convertTextToDTO(Text text) {
+    public TextDTO convertTextToDTO(Text text) throws NotConvertableException {
         TextDTO textDTO = new TextDTO();
         List<SentenceDTO> sentences = generateSentenceDTOs(text.getSentences());
         textDTO.setSentences(sentences);
         return textDTO;
     }
 
-    private List<SentenceDTO> generateSentenceDTOs(ImmutableList<Sentence> sentences) {
-        return new ArrayList<>(sentences.toList().stream().map(this::convertToSentenceDTO).toList());
+    private List<SentenceDTO> generateSentenceDTOs(ImmutableList<Sentence> sentences) throws NotConvertableException{
+        List<SentenceDTO> sentenceDTOS = new ArrayList<>();
+        for (Sentence sentence : sentences) {
+            sentenceDTOS.add(convertToSentenceDTO(sentence));
+        }
+        return sentenceDTOS;
     }
 
-    private SentenceDTO convertToSentenceDTO(Sentence sentence) {
+    private SentenceDTO convertToSentenceDTO(Sentence sentence) throws NotConvertableException {
         SentenceDTO sentenceDTO = new SentenceDTO();
         sentenceDTO.setSentenceNo(sentence.getSentenceNumber() + (long) 1);
         sentenceDTO.setText(sentence.getText());
@@ -50,11 +50,15 @@ public class ObjectToDtoConverter {
         return sentenceDTO;
     }
 
-    private List<WordDTO> generateWordDTOs(ImmutableList<Word> words) {
-        return new ArrayList<>(words.toList().stream().map(this::convertToWordDTO).toList());
+    private List<WordDTO> generateWordDTOs(ImmutableList<Word> words) throws NotConvertableException {
+        List<WordDTO> wordDTOS = new ArrayList<>();
+        for (Word word : words) {
+            wordDTOS.add(convertToWordDTO(word));
+        }
+        return wordDTOS;
     }
 
-    private WordDTO convertToWordDTO(Word word) {
+    private WordDTO convertToWordDTO(Word word) throws NotConvertableException {
         WordDTO wordDTO = new WordDTO();
         wordDTO.setId(word.getPosition() + (long) 1);
         wordDTO.setText(word.getText());
@@ -62,8 +66,7 @@ public class ObjectToDtoConverter {
         try {
             wordDTO.setPosTag(PosTag.forValue(word.getPosTag().toString()));
         } catch (IOException e) {
-            logger.warn("IOException when converting to WordDto.", e);
-            return null;
+            throw new NotConvertableException(String.format("IOException when converting word with id %d to WordDto: PosTag not found.", wordDTO.getId()));
         }
         wordDTO.setSentenceNo(word.getSentenceNo() + (long) 1);
         List<DependencyImpl> inDep = new ArrayList<>();
