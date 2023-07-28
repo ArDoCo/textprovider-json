@@ -47,7 +47,10 @@ public final class JsonConverter {
         if (!message.isEmpty()) {
             // get only the first fifteen messages
             List<String> loggerMessages = message.stream().map(ValidationMessage::getMessage).toList();
-            String loggerMessage = String.join("\n", loggerMessages.subList(0, 15));
+            if (loggerMessages.size() > 15) {
+                loggerMessages = loggerMessages.subList(0, 15);
+            }
+            String loggerMessage = String.join("\n", loggerMessages);
             logger.info("The following inconsistencies between the json and the json schema were found: {}", loggerMessage);
         }
         return message.isEmpty();
@@ -61,7 +64,7 @@ public final class JsonConverter {
      */
     public static TextDTO fromJsonString(String json) throws IOException, InvalidJsonException {
         if (!validateJson(json)) {
-            throw new InvalidJsonException("The json string s no valid text DTO.");
+            throw new InvalidJsonException("The json string is no valid text DTO.");
         }
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(json, TextDTO.class);
