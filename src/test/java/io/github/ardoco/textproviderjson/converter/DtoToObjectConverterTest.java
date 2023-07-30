@@ -39,5 +39,11 @@ class DtoToObjectConverterTest {
         Text actual3 = converter.convertText(TestUtil.generateDTOWithMultipleSentences());
         Assertions.assertEquals(expected3, actual3);
 
+        // convert text dto with incoming and outgoing dependencies
+        Text expected4 = TestUtil.generateTextWithDependencies();
+        Assertions.assertDoesNotThrow(() -> converter.convertText(TestUtil.generateTextDtoWithDependencies()));
+        Text actual4 = converter.convertText(TestUtil.generateTextDtoWithDependencies());
+        Assertions.assertEquals(expected4, actual4);
+
     }
 }

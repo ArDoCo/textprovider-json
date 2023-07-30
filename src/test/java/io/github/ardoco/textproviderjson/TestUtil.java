@@ -5,21 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.kit.kastel.mcse.ardoco.core.api.text.*;
+import io.github.ardoco.textproviderjson.dto.*;
+import io.github.ardoco.textproviderjson.textobject.*;
 import org.eclipse.collections.api.factory.Lists;
-
-import edu.kit.kastel.mcse.ardoco.core.api.text.POSTag;
-import edu.kit.kastel.mcse.ardoco.core.api.text.Phrase;
-import edu.kit.kastel.mcse.ardoco.core.api.text.PhraseType;
-import edu.kit.kastel.mcse.ardoco.core.api.text.Sentence;
-import edu.kit.kastel.mcse.ardoco.core.api.text.Text;
-import io.github.ardoco.textproviderjson.dto.PosTag;
-import io.github.ardoco.textproviderjson.dto.SentenceDTO;
-import io.github.ardoco.textproviderjson.dto.TextDTO;
-import io.github.ardoco.textproviderjson.dto.WordDTO;
-import io.github.ardoco.textproviderjson.textobject.PhraseImpl;
-import io.github.ardoco.textproviderjson.textobject.SentenceImpl;
-import io.github.ardoco.textproviderjson.textobject.TextImpl;
-import io.github.ardoco.textproviderjson.textobject.WordImpl;
 
 /**
  * This utility class provides methods to generate test data
@@ -253,6 +242,63 @@ public final class TestUtil {
 
         TextDTO text = new TextDTO();
         text.setSentences(List.of(sentence1));
+        return text;
+    }
+
+    public static TextDTO generateTextDtoWithDependencies() throws IOException {
+        TextDTO text = new TextDTO();
+
+        SentenceDTO sentence1 = new SentenceDTO();
+        sentence1.setSentenceNo(1);
+        sentence1.setText("Hello.");
+        sentence1.setConstituencyTree("(ROOT (INTJ (UH Hello) (. .)))");
+
+        WordDTO word1 = new WordDTO();
+        word1.setId(1);
+        word1.setSentenceNo(1);
+        word1.setLemma("hello");
+        word1.setText("Hello");
+        word1.setPosTag(PosTag.forValue("UH"));
+        OutgoingDependencyDTO outgoingDependency = new OutgoingDependencyDTO();
+        outgoingDependency.setTargetWordId(2);
+        outgoingDependency.setDependencyTag(DependencyTag.PUNCT);
+        word1.setOutgoingDependencies(List.of(outgoingDependency));
+
+        WordDTO word2 = new WordDTO();
+        word2.setId(2);
+        word2.setSentenceNo(1);
+        word2.setLemma(".");
+        word2.setText(".");
+        word2.setPosTag(PosTag.forValue("."));
+        IncomingDependencyDTO incomingDependency = new IncomingDependencyDTO();
+        incomingDependency.setSourceWordId(1);
+        incomingDependency.setDependencyTag(DependencyTag.PUNCT);
+        word2.setIncomingDependencies(List.of(incomingDependency));
+
+        List<WordDTO> words = new ArrayList<>(List.of(word1, word2));
+        sentence1.setWords(words);
+        text.setSentences(List.of(sentence1));
+        return text;
+    }
+
+    public static Text generateTextWithDependencies() {
+        TextImpl text = new TextImpl();
+        DependencyImpl outgoingDep = new DependencyImpl(DependencyTag.PUNCT, 1);
+        DependencyImpl incomingDep = new DependencyImpl(DependencyTag.PUNCT, 0);
+        List<WordImpl> words = new ArrayList<>(List.of(
+                new WordImpl(text, 0, 0, "Hello", POSTag.get("UH"), "hello", new ArrayList<>(), List.of(outgoingDep)),
+                new WordImpl(text, 1, 0, ".", POSTag.get("."), ".", List.of(incomingDep), new ArrayList<>())));
+
+        SentenceImpl sentence1 = new SentenceImpl(0, "Hello.", Lists.immutable.ofAll(words));
+
+        Phrase phrase1 = new PhraseImpl(Lists.immutable.ofAll(words), PhraseType.INTJ, new ArrayList<>());
+        List<Phrase> phrases = new ArrayList<>(List.of(phrase1));
+        Phrase rootPhrase = new PhraseImpl(Lists.immutable.empty(), PhraseType.ROOT, phrases);
+        sentence1.setPhrases(Lists.immutable.of(rootPhrase));
+
+        List<Sentence> sentences = new ArrayList<>();
+        sentences.add(sentence1);
+        text.setSentences(Lists.immutable.ofAll(sentences));
         return text;
     }
 
