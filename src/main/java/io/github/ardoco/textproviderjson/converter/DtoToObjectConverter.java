@@ -28,7 +28,7 @@ public class DtoToObjectConverter {
      * @param textDTO the text DTO
      * @return the ArDoCo text
      */
-    public Text convertText(TextDTO textDTO) throws NotConvertableException {
+    public Text convertText(TextDto textDTO) throws NotConvertableException {
         if (textDTO == null) {
             throw new NotConvertableException("Text DTO is null");
         }
@@ -38,16 +38,16 @@ public class DtoToObjectConverter {
         return text;
     }
 
-    private ImmutableList<Sentence> generateSentences(TextDTO textDTO, Text parentText) throws NotConvertableException {
-        List<SentenceDTO> sentenceDTOs = textDTO.getSentences();
+    private ImmutableList<Sentence> generateSentences(TextDto textDTO, Text parentText) throws NotConvertableException {
+        List<SentenceDto> sentenceDtos = textDTO.getSentences();
         MutableList<Sentence> sentences = Lists.mutable.empty();
-        for (SentenceDTO sentenceDTO : sentenceDTOs) {
+        for (SentenceDto sentenceDTO : sentenceDtos) {
             sentences.add(convertToSentence(sentenceDTO, parentText));
         }
         return sentences.toImmutable();
     }
 
-    private Sentence convertToSentence(SentenceDTO sentenceDTO, Text parentText) throws NotConvertableException {
+    private Sentence convertToSentence(SentenceDto sentenceDTO, Text parentText) throws NotConvertableException {
         List<Word> words = sentenceDTO.getWords().stream().map(wordDto -> convertToWord(wordDto, parentText)).toList();
         String constituencyTree = sentenceDTO.getConstituencyTree();
         SentenceImpl sentence = new SentenceImpl((int) sentenceDTO.getSentenceNo() - 1, sentenceDTO.getText(), Lists.immutable.ofAll(words));
@@ -118,18 +118,18 @@ public class DtoToObjectConverter {
         return tree.chars().filter(character -> character == CONSTITUENCY_TREE_OPEN_BRACKET).count() == 1;
     }
 
-    private Word convertToWord(WordDTO wordDTO, Text parent) {
+    private Word convertToWord(WordDto wordDTO, Text parent) {
         List<DependencyImpl> incomingDep = wordDTO.getIncomingDependencies().stream().map(this::convertIncomingDependency).toList();
         List<DependencyImpl> outgoingDep = wordDTO.getOutgoingDependencies().stream().map(this::convertOutgoingDependency).toList();
         return new WordImpl(parent, (int) wordDTO.getId() - 1, (int) wordDTO.getSentenceNo() - 1, wordDTO.getText(), POSTag.get(wordDTO.getPosTag().toString()),
                 wordDTO.getLemma(), incomingDep, outgoingDep);
     }
 
-    private DependencyImpl convertIncomingDependency(IncomingDependencyDTO dependencyDTO) {
+    private DependencyImpl convertIncomingDependency(IncomingDependencyDto dependencyDTO) {
         return new DependencyImpl(dependencyDTO.getDependencyTag(), dependencyDTO.getSourceWordId() - 1L);
     }
 
-    private DependencyImpl convertOutgoingDependency(OutgoingDependencyDTO dependencyDTO) {
+    private DependencyImpl convertOutgoingDependency(OutgoingDependencyDto dependencyDTO) {
         return new DependencyImpl(dependencyDTO.getDependencyTag(), dependencyDTO.getTargetWordId() - 1L);
     }
 }

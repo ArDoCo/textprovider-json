@@ -23,47 +23,47 @@ public final class TestUtil {
      * 
      * @return a default textDTO
      */
-    public static TextDTO generateDefaultDTO() throws IOException {
-        WordDTO word1 = new WordDTO();
+    public static TextDto generateDefaultDTO() throws IOException {
+        WordDto word1 = new WordDto();
         word1.setId(1);
         word1.setSentenceNo(1);
         word1.setLemma("this");
         word1.setText("This");
         word1.setPosTag(PosTag.forValue("DT"));
 
-        WordDTO word2 = new WordDTO();
+        WordDto word2 = new WordDto();
         word2.setId(2);
         word2.setSentenceNo(1);
         word2.setLemma("be");
         word2.setText("is");
         word2.setPosTag(PosTag.forValue("VBZ"));
 
-        WordDTO word3 = new WordDTO();
+        WordDto word3 = new WordDto();
         word3.setId(3);
         word3.setSentenceNo(1);
         word3.setLemma("I");
         word3.setText("me");
         word3.setPosTag(PosTag.forValue("PRP"));
 
-        WordDTO word4 = new WordDTO();
+        WordDto word4 = new WordDto();
         word4.setId(4);
         word4.setSentenceNo(1);
         word4.setLemma(".");
         word4.setText(".");
         word4.setPosTag(PosTag.forValue("."));
 
-        List<WordDTO> words = new ArrayList<>(List.of(word1, word2, word3, word4));
+        List<WordDto> words = new ArrayList<>(List.of(word1, word2, word3, word4));
 
-        SentenceDTO sentence1 = new SentenceDTO();
+        SentenceDto sentence1 = new SentenceDto();
         sentence1.setSentenceNo(1);
         sentence1.setText("This is me.");
         sentence1.setConstituencyTree("(ROOT (S (NP (DT This)) (VP (VBZ is) (NP (PRP me))) (. .)))");
         sentence1.setWords(words);
 
-        List<SentenceDTO> sentences = new ArrayList<>();
+        List<SentenceDto> sentences = new ArrayList<>();
         sentences.add(sentence1);
 
-        TextDTO text = new TextDTO();
+        TextDto text = new TextDto();
         text.setSentences(sentences);
 
         return text;
@@ -104,86 +104,86 @@ public final class TestUtil {
      *
      * @return an empty textDTO
      */
-    public static TextDTO generateEmptyDTO() {
-        TextDTO emptyTextDto = new TextDTO();
+    public static TextDto generateEmptyDTO() {
+        TextDto emptyTextDto = new TextDto();
         emptyTextDto.setSentences(new ArrayList<>());
         return emptyTextDto;
     }
 
-    public static TextDTO generateDTOWithMultipleSentences() throws IOException {
-        WordDTO word1 = new WordDTO();
+    public static TextDto generateDTOWithMultipleSentences() throws IOException {
+        WordDto word1 = new WordDto();
         word1.setId(1);
         word1.setSentenceNo(1);
         word1.setLemma("this");
         word1.setText("This");
         word1.setPosTag(PosTag.forValue("DT"));
 
-        WordDTO word2 = new WordDTO();
+        WordDto word2 = new WordDto();
         word2.setId(2);
         word2.setSentenceNo(1);
         word2.setLemma("be");
         word2.setText("is");
         word2.setPosTag(PosTag.forValue("VBZ"));
 
-        WordDTO word3 = new WordDTO();
+        WordDto word3 = new WordDto();
         word3.setId(3);
         word3.setSentenceNo(1);
         word3.setLemma("I");
         word3.setText("me");
         word3.setPosTag(PosTag.forValue("PRP"));
 
-        WordDTO word4 = new WordDTO();
+        WordDto word4 = new WordDto();
         word4.setId(4);
         word4.setSentenceNo(1);
         word4.setLemma(".");
         word4.setText(".");
         word4.setPosTag(PosTag.forValue("."));
 
-        List<WordDTO> words = new ArrayList<>(List.of(word1, word2, word3, word4));
+        List<WordDto> words = new ArrayList<>(List.of(word1, word2, word3, word4));
 
-        SentenceDTO sentence1 = new SentenceDTO();
+        SentenceDto sentence1 = new SentenceDto();
         sentence1.setSentenceNo(1);
         sentence1.setText("This is me.");
         sentence1.setConstituencyTree("(ROOT (S (NP (DT This)) (VP (VBZ is) (NP (PRP me))) (. .)))");
         sentence1.setWords(words);
 
-        WordDTO word5 = new WordDTO();
+        WordDto word5 = new WordDto();
         word5.setId(5);
         word5.setSentenceNo(2);
         word5.setLemma("this");
         word5.setText("This");
         word5.setPosTag(PosTag.forValue("DT"));
 
-        WordDTO word6 = new WordDTO();
+        WordDto word6 = new WordDto();
         word6.setId(6);
         word6.setSentenceNo(2);
         word6.setLemma("be");
         word6.setText("is");
         word6.setPosTag(PosTag.forValue("VBZ"));
 
-        WordDTO word7 = new WordDTO();
+        WordDto word7 = new WordDto();
         word7.setId(7);
         word7.setSentenceNo(2);
         word7.setLemma("you");
         word7.setText("you");
         word7.setPosTag(PosTag.forValue("PRP"));
 
-        WordDTO word8 = new WordDTO();
+        WordDto word8 = new WordDto();
         word8.setId(8);
         word8.setSentenceNo(2);
         word8.setLemma(".");
         word8.setText(".");
         word8.setPosTag(PosTag.forValue("."));
 
-        List<WordDTO> words2 = new ArrayList<>(List.of(word5, word6, word7, word8));
+        List<WordDto> words2 = new ArrayList<>(List.of(word5, word6, word7, word8));
 
-        SentenceDTO sentence2 = new SentenceDTO();
+        SentenceDto sentence2 = new SentenceDto();
         sentence2.setSentenceNo(2);
         sentence2.setText("This is you.");
         sentence2.setConstituencyTree("(ROOT (S (NP (DT This)) (VP (VBZ is) (NP (PRP you))) (. .)))");
         sentence2.setWords(new ArrayList<>(words2));
 
-        TextDTO text = new TextDTO();
+        TextDto text = new TextDto();
         text.setSentences(List.of(sentence1, sentence2));
         return text;
     }
@@ -233,49 +233,49 @@ public final class TestUtil {
         return text;
     }
 
-    public static TextDTO generateInvalidDTO() {
-        SentenceDTO sentence1 = new SentenceDTO();
+    public static TextDto generateInvalidDTO() {
+        SentenceDto sentence1 = new SentenceDto();
         sentence1.setSentenceNo(1);
         sentence1.setText("This is me.");
         sentence1.setConstituencyTree("(ROOT (S (NP (DT This)) (VP (VBZ is) (NP (PRP me))) (. .)))");
         sentence1.setWords(new ArrayList<>()); // invalid: empty list of words
 
-        TextDTO text = new TextDTO();
+        TextDto text = new TextDto();
         text.setSentences(List.of(sentence1));
         return text;
     }
 
-    public static TextDTO generateTextDtoWithDependencies() throws IOException {
-        TextDTO text = new TextDTO();
+    public static TextDto generateTextDtoWithDependencies() throws IOException {
+        TextDto text = new TextDto();
 
-        SentenceDTO sentence1 = new SentenceDTO();
+        SentenceDto sentence1 = new SentenceDto();
         sentence1.setSentenceNo(1);
         sentence1.setText("Hello.");
         sentence1.setConstituencyTree("(ROOT (INTJ (UH Hello) (. .)))");
 
-        WordDTO word1 = new WordDTO();
+        WordDto word1 = new WordDto();
         word1.setId(1);
         word1.setSentenceNo(1);
         word1.setLemma("hello");
         word1.setText("Hello");
         word1.setPosTag(PosTag.forValue("UH"));
-        OutgoingDependencyDTO outgoingDependency = new OutgoingDependencyDTO();
+        OutgoingDependencyDto outgoingDependency = new OutgoingDependencyDto();
         outgoingDependency.setTargetWordId(2);
         outgoingDependency.setDependencyTag(DependencyTag.PUNCT);
         word1.setOutgoingDependencies(List.of(outgoingDependency));
 
-        WordDTO word2 = new WordDTO();
+        WordDto word2 = new WordDto();
         word2.setId(2);
         word2.setSentenceNo(1);
         word2.setLemma(".");
         word2.setText(".");
         word2.setPosTag(PosTag.forValue("."));
-        IncomingDependencyDTO incomingDependency = new IncomingDependencyDTO();
+        IncomingDependencyDto incomingDependency = new IncomingDependencyDto();
         incomingDependency.setSourceWordId(1);
         incomingDependency.setDependencyTag(DependencyTag.PUNCT);
         word2.setIncomingDependencies(List.of(incomingDependency));
 
-        List<WordDTO> words = new ArrayList<>(List.of(word1, word2));
+        List<WordDto> words = new ArrayList<>(List.of(word1, word2));
         sentence1.setWords(words);
         text.setSentences(List.of(sentence1));
         return text;

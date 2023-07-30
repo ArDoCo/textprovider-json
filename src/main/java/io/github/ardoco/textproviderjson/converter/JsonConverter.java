@@ -12,7 +12,7 @@ import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
 
-import io.github.ardoco.textproviderjson.dto.TextDTO;
+import io.github.ardoco.textproviderjson.dto.TextDto;
 import io.github.ardoco.textproviderjson.error.InvalidJsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,12 +62,12 @@ public final class JsonConverter {
      * @param json the json string
      * @return the corresponding text DTO
      */
-    public static TextDTO fromJsonString(String json) throws IOException, InvalidJsonException {
+    public static TextDto fromJsonString(String json) throws IOException, InvalidJsonException {
         if (!validateJson(json)) {
             throw new InvalidJsonException("The json string is no valid text DTO.");
         }
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, TextDTO.class);
+        return objectMapper.readValue(json, TextDto.class);
     }
 
     /**
@@ -76,7 +76,7 @@ public final class JsonConverter {
      * @param obj the text DTO
      * @return the JSON string or null
      */
-    public static String toJsonString(TextDTO obj) throws IOException, InvalidJsonException {
+    public static String toJsonString(TextDto obj) throws IOException, InvalidJsonException {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(obj);
         if (!validateJson(jsonString)) {

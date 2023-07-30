@@ -23,11 +23,11 @@ class JsonConverterTest {
     @Test
     void testToJsonString() throws IOException, InvalidJsonException {
         // invalid text
-        TextDTO invalidText = new TextDTO();
+        TextDto invalidText = new TextDto();
         Assertions.assertThrows(InvalidJsonException.class, () -> JsonConverter.toJsonString(invalidText));
 
         // valid text
-        TextDTO validText = getValidTextDtoExample();
+        TextDto validText = getValidTextDtoExample();
         Assertions.assertDoesNotThrow(() -> JsonConverter.toJsonString(validText));
         String generatedJson = JsonConverter.toJsonString(validText);
         Assertions.assertDoesNotThrow(() -> JsonConverter.fromJsonString(generatedJson));
@@ -43,8 +43,8 @@ class JsonConverterTest {
         // valid json
         String validJsonText = getValidJsonExample();
         Assertions.assertDoesNotThrow(() -> JsonConverter.fromJsonString(validJsonText));
-        TextDTO generatedText = JsonConverter.fromJsonString(validJsonText);
-        TextDTO expectedText = getValidTextDtoExample();
+        TextDto generatedText = JsonConverter.fromJsonString(validJsonText);
+        TextDto expectedText = getValidTextDtoExample();
         Assertions.assertEquals(expectedText, generatedText);
     }
 
@@ -52,41 +52,41 @@ class JsonConverterTest {
         return Files.readString(Path.of("./src/test/resources/valid-example-text.json"));
     }
 
-    private TextDTO getValidTextDtoExample() throws IOException {
-        WordDTO expectedWord = new WordDTO();
+    private TextDto getValidTextDtoExample() throws IOException {
+        WordDto expectedWord = new WordDto();
         expectedWord.setId(1);
         expectedWord.setSentenceNo(1);
         expectedWord.setLemma("hello");
         expectedWord.setText("Hello");
         expectedWord.setPosTag(PosTag.forValue("UH"));
 
-        OutgoingDependencyDTO expectedOutDep = new OutgoingDependencyDTO();
+        OutgoingDependencyDto expectedOutDep = new OutgoingDependencyDto();
         expectedOutDep.setTargetWordId(1);
         expectedOutDep.setDependencyTag(DependencyTag.APPOS);
-        List<OutgoingDependencyDTO> expectedOutList = new ArrayList<>();
+        List<OutgoingDependencyDto> expectedOutList = new ArrayList<>();
         expectedOutList.add(expectedOutDep);
         expectedWord.setOutgoingDependencies(expectedOutList);
 
-        IncomingDependencyDTO expectedInDep = new IncomingDependencyDTO();
+        IncomingDependencyDto expectedInDep = new IncomingDependencyDto();
         expectedInDep.setSourceWordId(1);
         expectedInDep.setDependencyTag(DependencyTag.APPOS);
-        List<IncomingDependencyDTO> expectedInList = new ArrayList<>();
+        List<IncomingDependencyDto> expectedInList = new ArrayList<>();
         expectedInList.add(expectedInDep);
         expectedWord.setIncomingDependencies(expectedInList);
 
-        List<WordDTO> expectedWords = new ArrayList<>();
+        List<WordDto> expectedWords = new ArrayList<>();
         expectedWords.add(expectedWord);
 
-        SentenceDTO expectedSentence = new SentenceDTO();
+        SentenceDto expectedSentence = new SentenceDto();
         expectedSentence.setSentenceNo(1);
         expectedSentence.setText("Hello World!");
         expectedSentence.setConstituencyTree("(ROOT (FRAG (INTJ (UH Hello)) (NP (NNP World)) (. !)))");
         expectedSentence.setWords(expectedWords);
 
-        List<SentenceDTO> expectedSentences = new ArrayList<>();
+        List<SentenceDto> expectedSentences = new ArrayList<>();
         expectedSentences.add(expectedSentence);
 
-        TextDTO expectedText = new TextDTO();
+        TextDto expectedText = new TextDto();
         expectedText.setSentences(expectedSentences);
         return expectedText;
     }
