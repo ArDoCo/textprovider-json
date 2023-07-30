@@ -6,6 +6,9 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
@@ -14,8 +17,6 @@ import com.networknt.schema.ValidationMessage;
 
 import io.github.ardoco.textproviderjson.dto.TextDto;
 import io.github.ardoco.textproviderjson.error.InvalidJsonException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * utility class to convert a text DTO into json and back

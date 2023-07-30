@@ -1,14 +1,16 @@
+/* Licensed under MIT 2023. */
 package io.github.ardoco.textproviderjson.converter;
 
-import edu.kit.kastel.mcse.ardoco.core.api.text.Phrase;
-import io.github.ardoco.textproviderjson.textobject.PhraseImpl;
-import io.github.ardoco.textproviderjson.textobject.SentenceImpl;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.collections.api.factory.Lists;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import edu.kit.kastel.mcse.ardoco.core.api.text.Phrase;
+import io.github.ardoco.textproviderjson.textobject.PhraseImpl;
+import io.github.ardoco.textproviderjson.textobject.SentenceImpl;
 
 class ConverterUtilTest {
 

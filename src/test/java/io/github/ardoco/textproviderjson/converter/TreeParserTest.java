@@ -4,7 +4,6 @@ package io.github.ardoco.textproviderjson.converter;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.ardoco.textproviderjson.error.NotConvertableException;
 import org.eclipse.collections.api.factory.Lists;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,6 +12,7 @@ import edu.kit.kastel.mcse.ardoco.core.api.text.POSTag;
 import edu.kit.kastel.mcse.ardoco.core.api.text.Phrase;
 import edu.kit.kastel.mcse.ardoco.core.api.text.PhraseType;
 import edu.kit.kastel.mcse.ardoco.core.api.text.Word;
+import io.github.ardoco.textproviderjson.error.NotConvertableException;
 import io.github.ardoco.textproviderjson.textobject.PhraseImpl;
 import io.github.ardoco.textproviderjson.textobject.WordImpl;
 
@@ -20,10 +20,8 @@ class TreeParserTest {
 
     String tree = "(ROOT (S (NP (DT This)) (VP (VBZ is) (NP (PRP me))) (. .)))";
 
-    List<Word> words = new ArrayList<>(List.of(
-            new WordImpl(null, 0, 0, "This", POSTag.DETERMINER, null, null, null),
-            new WordImpl(null, 1, 0, "is", POSTag.VERB_SINGULAR_PRESENT_THIRD_PERSON, null, null, null),
-            new WordImpl(null, 2, 0, "me", POSTag.PRONOUN_PERSONAL, null, null, null),
+    List<Word> words = new ArrayList<>(List.of(new WordImpl(null, 0, 0, "This", POSTag.DETERMINER, null, null, null), new WordImpl(null, 1, 0, "is",
+            POSTag.VERB_SINGULAR_PRESENT_THIRD_PERSON, null, null, null), new WordImpl(null, 2, 0, "me", POSTag.PRONOUN_PERSONAL, null, null, null),
             new WordImpl(null, 3, 0, ".", POSTag.CLOSER, null, null, null)));
     Phrase subsubphrase = new PhraseImpl(Lists.immutable.of(words.get(2)), PhraseType.NP, new ArrayList<>());
     List<Phrase> subphrases = List.of(new PhraseImpl(Lists.immutable.of(words.get(0)), PhraseType.NP, new ArrayList<>()), new PhraseImpl(Lists.immutable.of(

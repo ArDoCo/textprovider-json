@@ -5,10 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.collections.api.factory.Lists;
+
 import edu.kit.kastel.mcse.ardoco.core.api.text.*;
 import io.github.ardoco.textproviderjson.dto.*;
 import io.github.ardoco.textproviderjson.textobject.*;
-import org.eclipse.collections.api.factory.Lists;
 
 /**
  * This utility class provides methods to generate test data
@@ -193,9 +194,9 @@ public final class TestUtil {
         List<Sentence> sentences = new ArrayList<>();
 
         List<WordImpl> words = new ArrayList<>(List.of(new WordImpl(text, 0, 0, "This", POSTag.DETERMINER, "this", new ArrayList<>(), new ArrayList<>()),
-                new WordImpl(text, 1, 0, "is", POSTag.VERB_SINGULAR_PRESENT_THIRD_PERSON, "be", new ArrayList<>(), new ArrayList<>()),
-                new WordImpl(text, 2, 0, "me", POSTag.PRONOUN_PERSONAL, "I", new ArrayList<>(), new ArrayList<>()),
-                new WordImpl(text, 3, 0, ".", POSTag.CLOSER, ".", new ArrayList<>(), new ArrayList<>())));
+                new WordImpl(text, 1, 0, "is", POSTag.VERB_SINGULAR_PRESENT_THIRD_PERSON, "be", new ArrayList<>(), new ArrayList<>()), new WordImpl(text, 2, 0,
+                        "me", POSTag.PRONOUN_PERSONAL, "I", new ArrayList<>(), new ArrayList<>()), new WordImpl(text, 3, 0, ".", POSTag.CLOSER, ".",
+                                new ArrayList<>(), new ArrayList<>())));
 
         SentenceImpl sentence1 = new SentenceImpl(0, "This is me.", Lists.immutable.ofAll(words));
 
@@ -212,9 +213,9 @@ public final class TestUtil {
         sentences.add(sentence1);
 
         List<WordImpl> words2 = new ArrayList<>(List.of(new WordImpl(text, 4, 1, "This", POSTag.DETERMINER, "this", new ArrayList<>(), new ArrayList<>()),
-                new WordImpl(text, 5, 1, "is", POSTag.VERB_SINGULAR_PRESENT_THIRD_PERSON, "be", new ArrayList<>(), new ArrayList<>()),
-                new WordImpl(text, 6, 1, "you", POSTag.PRONOUN_PERSONAL, "you", new ArrayList<>(), new ArrayList<>()),
-                new WordImpl(text, 7, 1, ".", POSTag.CLOSER, ".", new ArrayList<>(), new ArrayList<>())));
+                new WordImpl(text, 5, 1, "is", POSTag.VERB_SINGULAR_PRESENT_THIRD_PERSON, "be", new ArrayList<>(), new ArrayList<>()), new WordImpl(text, 6, 1,
+                        "you", POSTag.PRONOUN_PERSONAL, "you", new ArrayList<>(), new ArrayList<>()), new WordImpl(text, 7, 1, ".", POSTag.CLOSER, ".",
+                                new ArrayList<>(), new ArrayList<>())));
         SentenceImpl sentence2 = new SentenceImpl(1, "This is you.", Lists.immutable.ofAll(words2));
 
         Phrase subsubphrase2 = new PhraseImpl(Lists.immutable.of(words2.get(2)), PhraseType.NP, new ArrayList<>());
@@ -285,8 +286,7 @@ public final class TestUtil {
         TextImpl text = new TextImpl();
         DependencyImpl outgoingDep = new DependencyImpl(DependencyTag.PUNCT, 1);
         DependencyImpl incomingDep = new DependencyImpl(DependencyTag.PUNCT, 0);
-        List<WordImpl> words = new ArrayList<>(List.of(
-                new WordImpl(text, 0, 0, "Hello", POSTag.get("UH"), "hello", new ArrayList<>(), List.of(outgoingDep)),
+        List<WordImpl> words = new ArrayList<>(List.of(new WordImpl(text, 0, 0, "Hello", POSTag.get("UH"), "hello", new ArrayList<>(), List.of(outgoingDep)),
                 new WordImpl(text, 1, 0, ".", POSTag.get("."), ".", List.of(incomingDep), new ArrayList<>())));
 
         SentenceImpl sentence1 = new SentenceImpl(0, "Hello.", Lists.immutable.ofAll(words));

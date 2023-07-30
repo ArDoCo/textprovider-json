@@ -1,16 +1,18 @@
+/* Licensed under MIT 2023. */
 package io.github.ardoco.textproviderjson.converter;
-
-import edu.kit.kastel.mcse.ardoco.core.api.text.DependencyTag;
-import io.github.ardoco.textproviderjson.dto.*;
-import io.github.ardoco.textproviderjson.error.InvalidJsonException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import edu.kit.kastel.mcse.ardoco.core.api.text.DependencyTag;
+import io.github.ardoco.textproviderjson.dto.*;
+import io.github.ardoco.textproviderjson.error.InvalidJsonException;
 
 class JsonConverterTest {
 

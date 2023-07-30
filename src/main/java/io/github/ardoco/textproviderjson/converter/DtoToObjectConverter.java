@@ -4,14 +4,14 @@ package io.github.ardoco.textproviderjson.converter;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.ardoco.textproviderjson.error.NotConvertableException;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.list.MutableList;
 
 import edu.kit.kastel.mcse.ardoco.core.api.text.*;
 import io.github.ardoco.textproviderjson.dto.*;
+import io.github.ardoco.textproviderjson.error.NotConvertableException;
 import io.github.ardoco.textproviderjson.textobject.*;
-import org.eclipse.collections.api.list.MutableList;
 
 /***
  * this class converts a DTO text into an ArDoCo text object
@@ -84,11 +84,11 @@ public class DtoToObjectConverter {
     }
 
     private boolean isValidConstituencyTree(String constituencyTree) {
-        return constituencyTree.length() >= 2
-                && constituencyTree.charAt(0) == CONSTITUENCY_TREE_OPEN_BRACKET
-                && constituencyTree.charAt(constituencyTree.length() - 1) == CONSTITUENCY_TREE_CLOSE_BRACKET
-                && constituencyTree.chars().filter(ch -> ch == CONSTITUENCY_TREE_OPEN_BRACKET).count() == constituencyTree.chars().filter(ch -> ch == CONSTITUENCY_TREE_CLOSE_BRACKET).count()
-                && constituencyTree.split(CONSTITUENCY_TREE_SEPARATOR, 2).length > 1;
+        return constituencyTree.length() >= 2 && constituencyTree.charAt(0) == CONSTITUENCY_TREE_OPEN_BRACKET && constituencyTree.charAt(constituencyTree
+                .length() - 1) == CONSTITUENCY_TREE_CLOSE_BRACKET && constituencyTree.chars()
+                        .filter(ch -> ch == CONSTITUENCY_TREE_OPEN_BRACKET)
+                        .count() == constituencyTree.chars().filter(ch -> ch == CONSTITUENCY_TREE_CLOSE_BRACKET).count() && constituencyTree.split(
+                                CONSTITUENCY_TREE_SEPARATOR, 2).length > 1;
     }
 
     private List<String> getSubtrees(String treeWithoutType) {

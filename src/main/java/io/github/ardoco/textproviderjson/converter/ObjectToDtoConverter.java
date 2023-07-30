@@ -1,17 +1,18 @@
 /* Licensed under MIT 2023. */
 package io.github.ardoco.textproviderjson.converter;
 
-import edu.kit.kastel.mcse.ardoco.core.api.text.*;
-import io.github.ardoco.textproviderjson.dto.*;
-import io.github.ardoco.textproviderjson.error.NotConvertableException;
-import io.github.ardoco.textproviderjson.textobject.DependencyImpl;
-import org.eclipse.collections.api.list.ImmutableList;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.eclipse.collections.api.list.ImmutableList;
+
+import edu.kit.kastel.mcse.ardoco.core.api.text.*;
+import io.github.ardoco.textproviderjson.dto.*;
+import io.github.ardoco.textproviderjson.error.NotConvertableException;
+import io.github.ardoco.textproviderjson.textobject.DependencyImpl;
 
 public class ObjectToDtoConverter {
 
@@ -35,7 +36,7 @@ public class ObjectToDtoConverter {
         return textDTO;
     }
 
-    private List<SentenceDto> generateSentenceDTOs(ImmutableList<Sentence> sentences) throws NotConvertableException{
+    private List<SentenceDto> generateSentenceDTOs(ImmutableList<Sentence> sentences) throws NotConvertableException {
         List<SentenceDto> sentenceDtos = new ArrayList<>();
         for (Sentence sentence : sentences) {
             sentenceDtos.add(convertToSentenceDTO(sentence));

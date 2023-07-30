@@ -1,13 +1,15 @@
+/* Licensed under MIT 2023. */
 package io.github.ardoco.textproviderjson.converter;
+
+import java.io.IOException;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import edu.kit.kastel.mcse.ardoco.core.api.text.Text;
 import io.github.ardoco.textproviderjson.TestUtil;
 import io.github.ardoco.textproviderjson.error.NotConvertableException;
 import io.github.ardoco.textproviderjson.textobject.TextImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 
 class DtoToObjectConverterTest {
 
