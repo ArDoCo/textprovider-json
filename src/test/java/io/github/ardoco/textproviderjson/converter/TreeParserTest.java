@@ -1,5 +1,5 @@
 /* Licensed under MIT 2023. */
-package io.github.ardoco.textproviderjson;
+package io.github.ardoco.textproviderjson.converter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,6 @@ import edu.kit.kastel.mcse.ardoco.core.api.text.POSTag;
 import edu.kit.kastel.mcse.ardoco.core.api.text.Phrase;
 import edu.kit.kastel.mcse.ardoco.core.api.text.PhraseType;
 import edu.kit.kastel.mcse.ardoco.core.api.text.Word;
-import io.github.ardoco.textproviderjson.converter.DtoToObjectConverter;
 import io.github.ardoco.textproviderjson.textobject.PhraseImpl;
 import io.github.ardoco.textproviderjson.textobject.WordImpl;
 

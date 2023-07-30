@@ -26,6 +26,9 @@ public class ObjectToDtoConverter {
      * @return the text DTO
      */
     public TextDTO convertTextToDTO(Text text) throws NotConvertableException {
+        if (text == null) {
+            throw new NotConvertableException("Text is null");
+        }
         TextDTO textDTO = new TextDTO();
         List<SentenceDTO> sentences = generateSentenceDTOs(text.getSentences());
         textDTO.setSentences(sentences);

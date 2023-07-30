@@ -70,19 +70,8 @@ public final class TestUtil {
     }
 
     /**
-     * generates an empty textDTO
-     *
-     * @return an empty textDTO
-     */
-    public static TextDTO generateEmptyDTO() {
-        TextDTO emptyTextDto = new TextDTO();
-        emptyTextDto.setSentences(new ArrayList<>());
-        return emptyTextDto;
-    }
-
-    /**
      * generates a default text object without dependencies between the words
-     * 
+     *
      * @return the default text object
      */
     public static Text generateDefaultText() {
@@ -108,6 +97,17 @@ public final class TestUtil {
         sentences.add(sentence1);
         text.setSentences(Lists.immutable.ofAll(sentences));
         return text;
+    }
+
+    /**
+     * generates an empty textDTO
+     *
+     * @return an empty textDTO
+     */
+    public static TextDTO generateEmptyDTO() {
+        TextDTO emptyTextDto = new TextDTO();
+        emptyTextDto.setSentences(new ArrayList<>());
+        return emptyTextDto;
     }
 
     public static TextDTO generateDTOWithMultipleSentences() throws IOException {
